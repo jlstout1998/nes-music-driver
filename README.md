@@ -1,6 +1,6 @@
 # NES 6-Channel Music Driver
 
-Classic NES music driver originally created by Steven Ruddy with input from Tim Follin and Geoff Follin.
+Classic NES music driver originally created by Stephen Ruddy with input from Tim Follin and Geoff Follin.
 
 ## Overview
 
@@ -34,7 +34,7 @@ Studying the music data alongside the driver source is a good way to understand 
 
 ## Credits
 
-Original Music Driver: Steven Ruddy
+Original Music Driver: Stephen Ruddy
 
 Original Input and Contributions: Tim Follin and Geoff Follin
 
