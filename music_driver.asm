@@ -2824,7 +2824,7 @@ A_GOADDY:
 ;------------------------------------------------------------------------------
 ; $83 - STOP
 ;
-; Halts the channel and silences audio ouput.
+; Halts the channel and silences audio output.
 ;------------------------------------------------------------------------------
 
 A_STOP:
@@ -3006,7 +3006,7 @@ A_WOBBLE:
 ;
 ; Sets the speed of the pitch slide in semitones per frame. A value of 0
 ; disables. When active, each following note acts as a target frequency and the
-; channel steps toward it incremently each frame.
+; channel steps toward it incrementally each frame.
 ;------------------------------------------------------------------------------
 
 A_PORT:
@@ -3226,7 +3226,7 @@ B_GOADDY:
 ;------------------------------------------------------------------------------
 ; $83 - STOP
 ;
-; Halts the channel and silences audio ouput.
+; Halts the channel and silences audio output.
 ;------------------------------------------------------------------------------
 
 B_STOP:
@@ -3408,7 +3408,7 @@ B_WOBBLE:
 ;
 ; Sets the speed of the pitch slide in semitones per frame. A value of 0
 ; disables. When active, each following note acts as a target frequency and the
-; channel steps toward it incremently each frame.
+; channel steps toward it incrementally each frame.
 ;------------------------------------------------------------------------------
 
 B_PORT:
@@ -3628,7 +3628,7 @@ C_GOADDY:
 ;------------------------------------------------------------------------------
 ; $83 - STOP
 ;
-; Halts the channel and silences audio ouput.
+; Halts the channel and silences audio output.
 ;------------------------------------------------------------------------------
 
 C_STOP:
@@ -3756,7 +3756,7 @@ C_WOBBLE:
 ;
 ; Sets the speed of the pitch slide in semitones per frame. A value of 0
 ; disables. When active, each following note acts as a target frequency and the
-; channel steps toward it incremently each frame.
+; channel steps toward it incrementally each frame.
 ;------------------------------------------------------------------------------
 
 C_PORT:
@@ -3919,7 +3919,7 @@ D_GOADDY:
 ;------------------------------------------------------------------------------
 ; $83 - STOP
 ;
-; Halts the channel and silences audio ouput.
+; Halts the channel and silences audio output.
 ;------------------------------------------------------------------------------
 
 D_STOP:
@@ -4225,7 +4225,7 @@ E_GOADDY:
 ;------------------------------------------------------------------------------
 ; $83 - STOP
 ;
-; Halts the channel and silences audio ouput.
+; Halts the channel and silences audio output.
 ;------------------------------------------------------------------------------
 
 E_STOP:
@@ -4525,7 +4525,7 @@ F_GOADDY:
 ;------------------------------------------------------------------------------
 ; $83 - STOP
 ;
-; Halts the channel and silences audio ouput.
+; Halts the channel and silences audio output.
 ;------------------------------------------------------------------------------
 
 F_STOP:
@@ -4722,7 +4722,7 @@ F_WOBBLE:
 ;
 ; Sets the speed of the pitch slide in semitones per frame. A value of 0
 ; disables. When active, each following note acts as a target frequency and the
-; channel steps toward it incremently each frame.
+; channel steps toward it incrementally each frame.
 ;------------------------------------------------------------------------------
 
 F_PORT:
