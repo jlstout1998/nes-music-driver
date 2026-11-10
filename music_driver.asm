@@ -1,5 +1,5 @@
 ;------------------------------------------------------------------------------
-; MUSIC DRIVER by Steven Ruddy and Tim Follin
+; MUSIC DRIVER by Stephen Ruddy and Tim Follin/Geoff Follin
 ;------------------------------------------------------------------------------
 
 .export TUNEOFF, TUNE, EFFECT, REFRESH
