@@ -4905,3 +4905,5 @@ Notes_LO:
     .BYTE $00
 
 Driver_end:
+
+.include "music_data.asm"
