@@ -1,0 +1,273 @@
+;------------------------------------------------------------------------------
+; MUSIC DRIVER REFERENCE
+;------------------------------------------------------------------------------
+
+; Every frame call REFRESH
+;    JSR REFRESH
+
+; For TUNE
+;    LDX TUNE_NUMBER
+;    JSR TUNE
+
+; For FX
+;    LDX FX_NUMBER
+;    JSR EFFECT
+
+; To turn off
+;    JSR TUNEOFF
+
+; Check Tune Active
+;    JSR REFRESH::THE_END ; Output A: $FF = Active and $00 = Off
+
+; Check FX Active
+;    JSR REFRESH::FX_END  ; Output A: $FF = Active and $00 = Off 
+
+;------------------------------------------------------------------------------
+; COMMAND REFERENCE
+;------------------------------------------------------------------------------
+
+; Opcode  Name      Bytes   Operands
+; $80     FOR       2       repeat count
+; $81     NEXT      1       -
+; $82     LEN       2       fixed note duration (0 = duration byte per note)
+; $83     STOP      1       -
+; $84     GOSUB     3       address (lo, hi)
+; $85     RETURN    1       -
+; $86     TRANS     2       transpose (signed semitones)
+; $87     DISTORT   2       detune (unsigned period units)
+; $88     GOTO      3       address (lo, hi)
+; $89     SEND      2+2n    register/value pairs, terminated by bit 7
+; $8A     ADSR      4       init|sustain, attack|decay, starting stage
+; $8B     ENVON     2       envelope mode
+; $8C     WOBBLE    4       note offset, up time, down time
+; $8D     PORT      2       slide speed (semitones/frame, 0 = off)
+; $8E     DUTY      2       upper bits of $4000/$4004
+; $8F     VIBRATO   5 or 2  delay, rate, limit, direction
+; $90     IGNORE    1       -
+; $91     EFFECT    4       time, period lo, period hi
+; $92     TABLE     4       step time, table address (lo, hi)
+; $93     CUTOFF    2       frames
+; $94     ENDIT     2       frames
+; $95     SWEEP     2       value for $4001/$4005
+; $86     MINUS     1       -
+; $87     PLUS      1       -
+
+;------------------------------------------------------------------------------
+; CHANNEL REFERENCE
+;------------------------------------------------------------------------------
+
+; Name        A     B     C     D     E     F
+; FOR         X     X     X     X     X     X
+; NEXT        X     X     X     X     X     X
+; LEN         X     X     X     X     X     X
+; STOP        X     X     X     X     X     X
+; GOSUB       X     X     X     X     X     X
+; RETURN      X     X     X     X     X     X
+; TRANS       X     X     X     -     -     X
+; DISTORT     X     X     X     -     -     X
+; GOTO        X     X     X     X     X     X
+; SEND        X     X     X     X     X     X
+; ADSR        X     X     -     X     X     X
+; ENVON       X     X     -     X     X     X
+; WOBBLE      X     X     X     X     X     X
+; PORT        X     X     X     -     -     X
+; DUTY        X     X     -     -     -     X
+; VIBRATO     X     X     X     -     -     X
+; IGNORE      X     X     X     -     -     X
+; EFFECT      X     X     X     X     X     X
+; TABLE       X     X     -     X     X     X
+; CUTOFF      X     X     -     X     X     X
+; ENDIT       X     X     -     X     X     X
+; SWEEP       X     X     -     -     -     X
+; MINUS       -     -     -     X     X     -
+; PLUS        -     -     -     X     X     -
+
+;------------------------------------------------------------------------------
+; COMMAND GUIDE
+;------------------------------------------------------------------------------
+
+;------------------------------------------------------------------------------
+; $80 - FOR count
+;
+; Initializes a loop structure. Executes the subsequent block "count" times.
+; The starting address is saved so NEXT can jump back to it.
+; NOTE: Loops cannot be nested and subroutines invoked within a loop must not
+; issue FOR commands.
+;------------------------------------------------------------------------------
+
+;------------------------------------------------------------------------------
+; $81 - NEXT
+;
+; Marks the end of a FOR loop. Each time NEXT is reached, the repeat counter is
+; decremented. If more iterations remain, execution jumps back to the beginning
+; of the FOR loop. Otherwise, the stream continues after NEXT.
+;------------------------------------------------------------------------------
+
+;------------------------------------------------------------------------------
+; $82 - LEN duration
+;
+; Sets a fixed note duration in frames for all following notes. A value of 0
+; disables the fixed duration and tells the engine to read a separate duration
+; byte after each note in the stream.
+;------------------------------------------------------------------------------
+
+;------------------------------------------------------------------------------
+; $83 - STOP
+;
+; Halts the channel and silences audio output.
+;------------------------------------------------------------------------------
+
+;------------------------------------------------------------------------------
+; $84 - GOSUB address
+; $88 - GOTO address
+;
+; GOTO jumps directly to the stream address. GOSUB does the same but preserves
+; the return address.
+; NOTE: GOSUB can be nested up to stack_size (default 3).
+;------------------------------------------------------------------------------
+
+;------------------------------------------------------------------------------
+; $85 - RETURN
+;
+; Returns from the most recent GOSUB and resumes execution immediately
+; following the most recent GOSUB call.
+;------------------------------------------------------------------------------
+
+;------------------------------------------------------------------------------
+; $86 - TRANS semitones
+;
+; Applies a signed semitone offset to all following notes.
+;------------------------------------------------------------------------------
+
+;------------------------------------------------------------------------------
+; $87 - DISTORT value
+;
+; Applies an unsigned detune offset. The value is added directly to all
+; following note periods.
+;------------------------------------------------------------------------------
+
+;------------------------------------------------------------------------------
+; $89 - SEND (register, value) ... terminator
+;
+; Writes values directly to APU registers. Accepts pairs of register offsets
+; relative to $4000 ($00-$7F) followed by the data byte, terminated by any byte
+; with bit 7 set. 
+;------------------------------------------------------------------------------
+
+;------------------------------------------------------------------------------
+; $8A - ADSR volumes, speeds, stage
+;
+; Configures the ADSR envelope parameters. Use ENVON to select the envelope
+; mode.
+;   byte 1:   iiiissss   i = Starting Volume (0-15), s = Sustain Volume (0-15)
+;   byte 2:   aaaadddd   a = Attack Speed (0-15), d = Decay Speed (0-15)
+;   byte 3:   starting stage: 0 = Attack, 1 = Decay, 2 = Sustain
+; Both speed values act as frame timers: volume updates once every (speed + 1)
+; frames. Attack always ramps to 15 before Decay drops to the Sustain Volume.
+; WARNING: Avoid invoking ADSR when table mode is active.
+;------------------------------------------------------------------------------
+
+;------------------------------------------------------------------------------
+; $8B - ENVON mode
+;
+; Select which volume envelope mode will be used when each new note starts.
+;   $00 = Legato mode: ADSR envelope persists across notes without resetting
+;   $01-$7F = ADSR mode (configured with ADSR)
+;   $80-$FF = Envelope Table Mode (configured with TABLE)
+;------------------------------------------------------------------------------
+
+;------------------------------------------------------------------------------
+; $8C - WOBBLE offset, up_time, down_time
+;
+; Adds a pitch change that alternates between the base pitch and secondary
+; pitch.
+;   offset = signed semitone offset applied during the change cycle
+;   up_time = delay frames before transition to secondary pitch
+;   down_time = delay frames before returning to base pitch
+; A time value of 0 stops the wobble and an up_time of $FF disables.
+; WARNING: Wobble and Vibrato share a direction flag and cannot execute
+; concurrently.
+;------------------------------------------------------------------------------
+
+;------------------------------------------------------------------------------
+; $8D - PORT speed
+;
+; Sets the speed of the pitch slide in semitones per frame. A value of 0
+; disables. When active, each following note acts as a target frequency and the
+; channel steps toward it incrementally each frame.
+;------------------------------------------------------------------------------
+
+;------------------------------------------------------------------------------
+; $8E - DUTY value
+;
+; Configures the upper bits of register $4000/$4004 which are combined with the
+; volume bits (0-3) each frame.
+;   bits 7-6:   Duty cycle waveform
+;   bit 5:      Length counter halt flag
+;   bit 4:      Constant volume flag
+;------------------------------------------------------------------------------
+
+;------------------------------------------------------------------------------
+; $8F - VIBRATO delay, rate, limit, direction
+;
+; Variable length command format:
+;   delay = 0   Disable vibrato. Consumes 2 bytes.
+;   delay <> 0  Consumes 5 bytes to configure all parameters.
+;
+;   delay = Delays the start by N-1 frames
+;   rate = Period units added or subtracted each frame
+;   limit = Number of frames in the first swing and later swings doubled. A
+;           value of 0 never reverses direction.
+;   direction = Initial swing direction: $00 = decrement and $FF = increment
+;------------------------------------------------------------------------------
+
+;------------------------------------------------------------------------------
+; $90 - IGNORE
+;
+; Skips the transposition of the next note only.
+;------------------------------------------------------------------------------
+
+;------------------------------------------------------------------------------
+; $91 - EFFECT time, period_lo, period_hi
+;
+; Makes each following note start with a fixed period instead of its own pitch
+; producing a blip before transitioning to its standard pitch. The effect
+; period sounds for (time - 1) frames. A time of 0 disables.
+; NOTE: Vibrato, Wobble, and Slides are paused while the effect is playing.
+; Transpose and Distort are not applied to the effect period.
+;------------------------------------------------------------------------------
+
+;------------------------------------------------------------------------------
+; $92 - TABLE step_time, address
+;
+; Sets to Envelope Table Mode and the address for the volume table to be used.
+;   step_time = Number of frames per table step
+;   address = Pointer to the table data (low byte, high byte)
+;------------------------------------------------------------------------------
+
+;------------------------------------------------------------------------------
+; $93 - CUTOFF frames
+; $94 - ENDIT frames
+;
+; These commands are only used in table envelope mode. They control when a note
+; exits the table's hold state to advance to the entries that follow.
+;   CUTOFF = Elapsed frames from note's start. Ignored if cutoff > duration
+;   ENDIT = Remaining frames from note's end. Ignored if cutoff < duration
+; Values of 0 disable.
+;------------------------------------------------------------------------------
+
+;------------------------------------------------------------------------------
+; $95 - SWEEP value
+;
+; Sets the value written to $4001/$4005 for each following note.
+; Format: EPPPNSSS   E: Enable, P: Period, N: Negate, S: Shift
+;------------------------------------------------------------------------------
+
+;------------------------------------------------------------------------------
+; $86 - MINUS
+; $87 - PLUS
+;
+; Sets the Periodic Noise Mode in $400E
+;   MINUS = Periodic Mode (93 steps)
+;   PLUS = Normal Mode (32767 steps)
+;------------------------------------------------------------------------------
