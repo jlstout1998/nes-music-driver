@@ -9,23 +9,33 @@ DATA_size = DATA_end - DATA_start
 ;------------------------------------------------------------------------------
 
 Start_A_LO: ; Tune Pointers for Channel A Here
+    .LOBYTES SURFER_A
 Start_A_HI:
+    .HIBYTES SURFER_A
 
 Start_B_LO: ; Tune Pointers for Channel B Here
+    .LOBYTES SURFER_B
 Start_B_HI:
+    .HIBYTES SURFER_B
 
 Start_C_LO: ; Tune Pointers for Channel C Here
+    .LOBYTES SURFER_C
 Start_C_HI:
+    .HIBYTES SURFER_C
 
 Start_D_LO: ; Tune Pointers for Channel D Here
+    .LOBYTES SURFER_D
 Start_D_HI:
+    .HIBYTES SURFER_D
 
 ;------------------------------------------------------------------------------
 ; EFFECT TABLES
 ;------------------------------------------------------------------------------
 
 Start_FX_LO: ; SFX Pointers Here
+    .LOBYTES fire
 Start_FX_HI:
+    .HIBYTES fire
 
 ;------------------------------------------------------------------------------
 ; COMMANDS
