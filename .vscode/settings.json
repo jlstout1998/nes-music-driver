@@ -1,0 +1,154 @@
+{
+    "ca65.importFromHints": true,
+    "ca65.anonymousLabelIndexHints": true,
+    "ca65.implicitImports": true,
+    "ca65.includeDirs": [
+        "**/include",
+        "**/data"
+    ],
+
+        "editor.tokenColorCustomizations": {
+        "textMateRules": [
+            {
+                "scope": "comment.line.semicolon.ca65",
+                "settings": {
+                    "foreground": "#6A9955"
+                }
+            },
+            {
+                "scope": "comment.block.c.ca65",
+                "settings": {
+                    "foreground": "#6A9955"
+                }
+            },
+                        {
+                "scope": "entity.name.function.ca65",
+                "settings": {
+                    "foreground": "#F0D878",
+                    "fontStyle": "bold"
+                }
+            },
+            {
+                "scope": "entity.name.label.ca65",
+                "settings": {
+                    "foreground": "#D4B85C",
+                    "fontStyle": "bold"
+                }
+            },
+            {
+                "scope": "entity.name.label.cheap.ca65",
+                "settings": {
+                    "foreground": "#A89555"
+                }
+            },
+                        {
+                "scope": "variable.other.symbol.cheap.ca65",
+                "settings": {
+                    "foreground": "#918456"
+                }
+            },
+            {
+                "scope": "keyword.other.mnemonic.ca65",
+                "settings": {
+                    "foreground": "#569CD6",
+                    "fontStyle": "bold"
+                }
+            },
+            {
+                "scope": "keyword.control.directive.ca65",
+                "settings": {
+                    "foreground": "#C586C0",
+                    "fontStyle": "bold"
+                }
+            },
+            {
+                "scope": "variable.language.register.ca65",
+                "settings": {
+                    "foreground": "#61B9E8"
+                }
+            },
+            {
+                "scope": "constant.numeric.ca65",
+                "settings": {
+                    "foreground": "#A8C49A"
+                }
+            },
+            {
+                "scope": "variable.other.symbol.ca65",
+                "settings": {
+                    "foreground": "#4EC9B0"
+                }
+            },
+            {
+                "scope": "string.quoted.single.ca65",
+                "settings": {
+                    "foreground": "#D19A78"
+                }
+            },
+            {
+                "scope": "string.quoted.double.ca65",
+                "settings": {
+                    "foreground": "#D19A78"
+                }
+            },
+            {
+                "scope": "entity.name.namespace.ca65",
+                "settings": {
+                    "foreground": "#D2A8FF"
+                }
+            },
+            {
+                "scope": "punctuation.separator.namespace.ca65",
+                "settings": {
+                    "foreground": "#8B949E"
+                    }
+            },
+            {
+                "scope": "entity.name.type.struct.ca65",
+                "settings": {
+                    "foreground": "#56D4DD"
+                }
+            },
+            {
+                "scope": "entity.name.type.enum.ca65",
+                "settings": {
+                    "foreground": "#B4A7FF"
+                }
+            }
+        ]
+    },
+    "editor.fontFamily": "Cascadia Code, Consolas, 'Courier New', monospace",
+    "editor.fontSize": 13,
+    "editor.lineHeight": 20,
+    "editor.fontLigatures": false,
+
+    "editor.renderLineHighlight": "line",
+    "editor.smoothScrolling": true,
+    "editor.cursorBlinking": "smooth",
+
+    "editor.stickyScroll.enabled": true,
+    "editor.stickyScroll.maxLineCount": 3,
+
+    "breadcrumbs.enabled": true,
+    "breadcrumbs.filePath": "on",
+    "breadcrumbs.symbolPath": "on",
+
+    "editor.minimap.enabled": true,
+    "editor.minimap.renderCharacters": false,
+    "editor.minimap.maxColumn": 100,
+
+    "editor.renderWhitespace": "selection",
+
+    "editor.guides.bracketPairs": true,
+    "editor.bracketPairColorization.enabled": true,
+
+    "workbench.editor.tabSizing": "fit",
+    "workbench.editor.tabCloseButton": "right",
+
+    "window.restoreWindows": "preserve",
+
+    "explorer.compactFolders": false,
+    "workbench.editor.tabActionLocation": "right",
+
+    "editor.colorDecorators": false
+}
