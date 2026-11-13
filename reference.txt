@@ -44,7 +44,7 @@
 ; $8E     DUTY      2       upper bits of $4000/$4004
 ; $8F     VIBRATO   5 or 2  delay, rate, limit, direction
 ; $90     IGNORE    1       -
-; $91     EFFECT    4       time, period lo, period hi
+; $91     EFFECT    4 or 3  time, period lo, period hi or time, period (on noise channels)
 ; $92     TABLE     4       step time, table address (lo, hi)
 ; $93     CUTOFF    2       frames
 ; $94     ENDIT     2       frames
@@ -229,6 +229,7 @@
 
 ;------------------------------------------------------------------------------
 ; $91 - EFFECT time, period_lo, period_hi
+; $91 - EFFECT time, period
 ;
 ; Makes each following note start with a fixed period instead of its own pitch
 ; producing a blip before transitioning to its standard pitch. The effect
