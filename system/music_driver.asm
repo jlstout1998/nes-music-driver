@@ -4072,7 +4072,7 @@ D_WOBBLE:
     JMP ADVANCE_PC_D
 
 ;------------------------------------------------------------------------------
-; $91 - EFFECT time, period_lo, period_hi
+; $91 - EFFECT time, period
 ;
 ; Makes each following note start with a fixed period instead of its own pitch
 ; producing a blip before transitioning to its standard pitch. The effect
@@ -4389,7 +4389,7 @@ E_WOBBLE:
     JMP ADVANCE_PC_E
 
 ;------------------------------------------------------------------------------
-; $91 - EFFECT time, period_lo, period_hi
+; $91 - EFFECT time, period
 ;
 ; Makes each following note start with a fixed period instead of its own pitch
 ; producing a blip before transitioning to its standard pitch. The effect
